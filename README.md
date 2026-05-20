@@ -2,6 +2,10 @@
 
 A high-fidelity Food Delivery mobile application built with React Native, Expo SDK 55, and React Navigation v7.
 
+<p align="center">
+  <img src="./assets/flow-diagram.png" width="100%" />
+</p>
+
 ## Demo Video and Screenshots
 
 Below is the walkthrough video showcasing the user flows:
