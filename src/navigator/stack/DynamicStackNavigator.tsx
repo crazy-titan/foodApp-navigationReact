@@ -9,7 +9,7 @@ import CartScreen from '../../screen/CartScreen';
 import SearchScreen from '../../screen/SearchScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ProfileScreen from '../../screen/ProfileScreen';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import SettingScreen from '../../screen/SettingScreen';
 import HelpScreen from '../../screen/HelpScreen'
 import LogOutScreen from '../../screen/LogOutScreen';
@@ -20,25 +20,44 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Drawer = createDrawerNavigator<any>();
 
+function CustomDrawerContent(props: any) {
+    return (
+        <DrawerContentScrollView {...props} contentContainerStyle={{ paddingTop: 0 }}>
+            <View style={drawerStyles.headerContainer}>
+                <View style={drawerStyles.avatar}>
+                    <Text style={drawerStyles.avatarText}>AA</Text>
+                </View>
+                <Text style={drawerStyles.userName}>Abhinav Anand</Text>
+                <Text style={drawerStyles.userEmail}>contact@meetabhinav.com</Text>
+            </View>
+            <View style={drawerStyles.divider} />
+            <DrawerItemList {...props} />
+        </DrawerContentScrollView>
+    );
+}
+
 function MyDrawer(){
     return (
-        <Drawer.Navigator screenOptions={{
-            drawerPosition: "right",
-            drawerActiveTintColor: '#FF5E3A',
-            drawerInactiveTintColor: '#4B5563',
-            drawerLabelStyle: {
-                fontWeight: '600',
-                fontSize: 14,
-            },
-            headerStyle: {
-                backgroundColor: '#ffffff',
-            },
-            headerTintColor: '#1F2937',
-            headerTitleStyle: {
-                fontWeight: '800',
-            },
-            headerShadowVisible: false,
-        }}>
+        <Drawer.Navigator 
+            drawerContent={props => <CustomDrawerContent {...props} />}
+            screenOptions={{
+                drawerPosition: "right",
+                drawerActiveTintColor: '#FF5E3A',
+                drawerInactiveTintColor: '#4B5563',
+                drawerLabelStyle: {
+                    fontWeight: '600',
+                    fontSize: 14,
+                },
+                headerStyle: {
+                    backgroundColor: '#ffffff',
+                },
+                headerTintColor: '#1F2937',
+                headerTitleStyle: {
+                    fontWeight: '800',
+                },
+                headerShadowVisible: false,
+            }}
+        >
             <Drawer.Screen name="Your Profile" component={ProfileScreen} options={{
                 drawerIcon: ({ color, size }) => <Ionicons name="person-outline" size={size} color={color} />
             }} />
@@ -200,3 +219,49 @@ export default function DynamicStackNavigator(){
         </NavigationContainer>
     )
 }
+
+const drawerStyles = StyleSheet.create({
+    headerContainer: {
+        paddingTop: 60,
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+    },
+    avatar: {
+        width: 70,
+        height: 70,
+        borderRadius: 35,
+        backgroundColor: '#FF5E3A',
+        justifyContent: 'center',
+        alignItems: 'center',
+        shadowColor: '#FF5E3A',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
+        elevation: 5,
+        marginBottom: 12,
+    },
+    avatarText: {
+        fontSize: 24,
+        fontWeight: '800',
+        color: '#FFFFFF',
+    },
+    userName: {
+        fontSize: 18,
+        fontWeight: '800',
+        color: '#1F2937',
+        marginBottom: 4,
+    },
+    userEmail: {
+        fontSize: 12,
+        fontWeight: '500',
+        color: '#6B7280',
+    },
+    divider: {
+        height: 1,
+        backgroundColor: '#F3F4F6',
+        marginHorizontal: 16,
+        marginVertical: 10,
+    },
+});
