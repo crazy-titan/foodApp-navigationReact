@@ -4,9 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useAuth } from '../context/AuthContext';
 
 const LogOutScreen = () => {
   const navigation = useNavigation<any>();
+  const { signOut } = useAuth();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,7 +43,7 @@ const LogOutScreen = () => {
               styles.logoutButton,
               pressed && styles.logoutButtonPressed
             ]}
-            onPress={() => navigation.navigate('Onboarding')}
+            onPress={() => signOut()}
           >
             <Text style={styles.logoutButtonText}>Log Out</Text>
           </Pressable>

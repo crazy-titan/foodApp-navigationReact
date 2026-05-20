@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { NavigationContainer, getFocusedRouteNameFromRoute } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import OnboardingScreen from '../../screen/OnboardingScreen';
 import HomeScreen from '../../screen/HomeScreen';
 import RestaurantScreen from '../../screen/RestaurantScreen';
@@ -15,6 +15,8 @@ import HelpScreen from '../../screen/HelpScreen'
 import LogOutScreen from '../../screen/LogOutScreen';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
+import LoginScreen from '../../screen/LoginScreen';
 
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -192,23 +194,37 @@ function MyTabs(){
 const Stack = createNativeStackNavigator();
 
 function MyStack(){
+    const { isLoading, userToken } = useAuth();
+
+    if (isLoading) {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#FFFFFF' }}>
+                <ActivityIndicator size="large" color="#FF5E3A" />
+            </View>
+        );
+    }
+
     return (
-        <Stack.Navigator  screenOptions={{
+        <Stack.Navigator screenOptions={{
             headerStyle: {
-            backgroundColor: "#000000",
+                backgroundColor: "#000000",
             },
             headerTintColor: "#ffffff",
             headerTitleAlign: "center",
             animation: "fade_from_bottom",
             gestureEnabled: true,
             animationDuration: 250,
-            }}>
-
-            <Stack.Screen name= "Onboarding" component={OnboardingScreen} options={{
-                headerShown: false,   
-            }}/>
-            
-            <Stack.Screen name = "Stack-Tab" component={MyTabs} options={{headerShown:false}}/>
+        }}>
+            {userToken === null ? (
+                <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            ) : (
+                <>
+                    <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{
+                        headerShown: false,   
+                    }}/>
+                    <Stack.Screen name="Stack-Tab" component={MyTabs} options={{ headerShown: false }}/>
+                </>
+            )}
         </Stack.Navigator>
     )
 }
