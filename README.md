@@ -6,7 +6,7 @@ A high-fidelity Food Delivery mobile application built with React Native, Expo S
 
 Below is the walkthrough video showcasing the user flows:
 
-<video src="https://github.com/crazy-titan/foodApp-navigationReact/raw/main/assets/app-demo.mp4" width="100%" controls></video>
+[Watch Video](src/assets/app-demo.mp4)
 
 ### App Screenshots
 
