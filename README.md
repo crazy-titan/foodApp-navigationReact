@@ -2,7 +2,7 @@
 
 A high-fidelity Food Delivery mobile application built with React Native, Expo SDK 55, and React Navigation v7.
 
-## Demo Video
+## Demo Video and Screenshots
 
 Below is the walkthrough video showcasing the user flows:
 
@@ -11,6 +11,15 @@ Below is the walkthrough video showcasing the user flows:
 </video>
 
 Note: You can replace the video path above with your own mp4 file.
+
+### App Screenshots
+
+<p align="center">
+  <img src="./assets/screenshot1.png" width="45%" style="margin-right: 5%;" />
+  <img src="./assets/screenshot2.png" width="45%" />
+</p>
+
+Note: You can replace the screenshot image paths above with your own image files.
 
 ## Features
 
