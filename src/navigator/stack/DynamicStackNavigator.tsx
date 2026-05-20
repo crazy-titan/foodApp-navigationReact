@@ -228,9 +228,26 @@ function MyStack(){
         </Stack.Navigator>
     )
 }
+const linking: any = {
+    prefixes: ['foodapp://', 'https://foodapp.com'],
+    config: {
+        screens: {
+            'Stack-Tab': {
+                screens: {
+                    'Explore Foods': {
+                        screens: {
+                            Restaurant: 'restaurant/:restaurant',
+                        },
+                    },
+                },
+            },
+        },
+    },
+};
+
 export default function DynamicStackNavigator(){
     return (
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
         <MyStack/>
         </NavigationContainer>
     )
