@@ -6,11 +6,7 @@ A high-fidelity Food Delivery mobile application built with React Native, Expo S
 
 Below is the walkthrough video showcasing the user flows:
 
-<video src="./assets/app-demo.mp4" width="100%" controls>
-  Your browser does not support the video tag.
-</video>
-
-Note: You can replace the video path above with your own mp4 file.
+![Walkthrough Video](./assets/app-demo.mp4)
 
 ### App Screenshots
 
