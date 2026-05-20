@@ -5,6 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+import { useCart } from '../context/CartContext';
+
 // Mock menu items database
 const MENU_ITEMS = [
   {
@@ -63,45 +65,21 @@ const RestaurantScreen = ({ route }: any) => {
   const navigation = useNavigation<any>();
   const { restaurant = "Fasoos" } = route.params || {};
 
-  // Store quantities of each item: { itemId: quantity }
-  const [cartQuantities, setCartQuantities] = useState<{ [key: string]: number }>({});
+  const { cartItems, addToCart, removeFromCart, cartCount: totalItemsCount, cartTotal: totalCartPrice } = useCart();
 
   const handleAddItem = (id: string) => {
-    setCartQuantities(prev => ({
-      ...prev,
-      [id]: (prev[id] || 0) + 1
-    }));
+    const item = MENU_ITEMS.find(m => m.id === id);
+    if (item) {
+      addToCart({ id: item.id, name: item.name, price: item.price, image: item.image });
+    }
   };
 
   const handleRemoveItem = (id: string) => {
-    if ((cartQuantities[id] || 0) <= 0) return;
-    setCartQuantities(prev => {
-      const updated = { ...prev };
-      updated[id] = updated[id] - 1;
-      if (updated[id] === 0) {
-        delete updated[id];
-      }
-      return updated;
-    });
+    removeFromCart(id);
   };
-
-  const getCartTotals = () => {
-    let count = 0;
-    let price = 0;
-    Object.keys(cartQuantities).forEach(id => {
-      const item = MENU_ITEMS.find(m => m.id === id);
-      if (item) {
-        count += cartQuantities[id];
-        price += item.price * cartQuantities[id];
-      }
-    });
-    return { count, price: parseFloat(price.toFixed(2)) };
-  };
-
-  const { count: totalItemsCount, price: totalCartPrice } = getCartTotals();
 
   const renderMenuItem = ({ item }: { item: typeof MENU_ITEMS[0] }) => {
-    const qty = cartQuantities[item.id] || 0;
+    const qty = cartItems.find((i) => i.id === item.id)?.quantity || 0;
     return (
       <View style={styles.menuItemCard}>
         <View style={styles.menuItemDetails}>

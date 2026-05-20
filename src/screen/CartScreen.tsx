@@ -4,14 +4,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
+import { useCart } from '../context/CartContext';
+
 const CartScreen = ({ route }: any) => {
   const navigation = useNavigation<any>();
-  const { price = 0 } = route?.params || {};
+  const { cartItems, cartTotal, clearCart } = useCart();
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [isPlacing, setIsPlacing] = useState(false);
 
   // Math breakdown
-  const subtotal = parseFloat(price);
+  const subtotal = cartTotal;
   const deliveryFee = subtotal > 300 || subtotal === 0 ? 0 : 40.00;
   const tax = parseFloat((subtotal * 0.05).toFixed(2)); // 5% GST
   const promoDiscount = subtotal > 200 ? 50.00 : 0.00;
@@ -23,6 +25,7 @@ const CartScreen = ({ route }: any) => {
     setTimeout(() => {
       setIsPlacing(false);
       setOrderPlaced(true);
+      clearCart(); // Empties global cart upon successful checkout
     }, 1500);
   };
 
@@ -49,7 +52,7 @@ const CartScreen = ({ route }: any) => {
               <Ionicons name="restaurant" size={20} color="#FF5E3A" />
               <View style={styles.trackerTextContainer}>
                 <Text style={styles.trackerStepTitle}>Preparing your food</Text>
-                <Text style={styles.trackerStepSub}>Kitchen is preparing Fasoos specials</Text>
+                <Text style={styles.trackerStepSub}>Kitchen is preparing your delicious meal</Text>
               </View>
             </View>
             <View style={styles.trackerDivider} />
@@ -105,22 +108,28 @@ const CartScreen = ({ route }: any) => {
               <Text style={styles.sectionTitle}>Selected Meals</Text>
             </View>
             <View style={styles.itemsCard}>
-              <View style={styles.itemRow}>
-                <View style={styles.row}>
-                  <View style={styles.itemQtyBadge}>
-                    <Text style={styles.itemQtyText}>1x</Text>
+              {cartItems.map((item) => (
+                <React.Fragment key={item.id}>
+                  <View style={styles.itemRow}>
+                    <View style={styles.row}>
+                      <View style={styles.itemQtyBadge}>
+                        <Text style={styles.itemQtyText}>{item.quantity}x</Text>
+                      </View>
+                      <View>
+                        <Text style={styles.itemNameText}>{item.name}</Text>
+                        <Text style={styles.itemPriceText}>₹{item.price.toFixed(2)} each</Text>
+                      </View>
+                    </View>
+                    <Text style={styles.itemTotalText}>₹{(item.price * item.quantity).toFixed(2)}</Text>
                   </View>
-                  <View>
-                    <Text style={styles.itemNameText}>Fasoos Gourmet Selected Dishes</Text>
-                    <Text style={styles.itemPriceText}>Customized Options Included</Text>
-                  </View>
-                </View>
-                <Text style={styles.itemTotalText}>₹{subtotal.toFixed(2)}</Text>
-              </View>
-              <View style={styles.dashDivider} />
+                  <View style={styles.dashDivider} />
+                </React.Fragment>
+              ))}
               <View style={styles.promoAppliedBox}>
                 <Ionicons name="gift-outline" size={16} color="#10B981" />
-                <Text style={styles.promoAppliedText}>Promo Applied: -₹50.00 first order discount</Text>
+                <Text style={styles.promoAppliedText}>
+                  {subtotal > 200 ? "Promo Applied: -₹50.00 first order discount" : "Add items above ₹200 for discount!"}
+                </Text>
               </View>
             </View>
 
