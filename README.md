@@ -19,8 +19,6 @@ Note: You can replace the video path above with your own mp4 file.
   <img src="./assets/screenshot2.png" width="45%" />
 </p>
 
-Note: You can replace the screenshot image paths above with your own image files.
-
 ## Features
 
 * Global Cart Context: Seamless addition, removal, and quantity synchronization of menu items across screens using React Context.
@@ -48,16 +46,22 @@ Ensure you have Node.js installed, along with either NPM or Bun.
 ### Installation
 
 1. Clone the repository:
+   ```bash
    git clone git@github.com:crazy-titan/foodApp-navigationReact.git
    cd foodApp-navigationReact
+   ```
 
 2. Install dependencies:
+   ```bash
    bun install
+   ```
 
 ### Running the App
 
 Start the Expo Development Server:
+```bash
 bun start
+```
 
 Use the Expo Go app or a simulator (iOS or Android) to preview the app.
 
@@ -66,7 +70,11 @@ Use the Expo Go app or a simulator (iOS or Android) to preview the app.
 Once the development server is active, you can test universal deep linking capabilities:
 
 * iOS Simulator:
+  ```bash
   npx uri-scheme open "foodapp://restaurant/Fasoos" --ios
+  ```
 
 * Android Emulator:
+  ```bash
   npx uri-scheme open "foodapp://restaurant/Fasoos" --android
+  ```
