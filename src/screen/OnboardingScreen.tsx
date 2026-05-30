@@ -32,7 +32,7 @@ const OnboardingScreen = () => {
                   styles.button,
                   pressed && styles.buttonPressed
                 ]} 
-                onPress={() => navigation.navigate("Stack-Tab")}
+                onPress={() => navigation.navigate("Login")}
               >
                 <Text style={styles.buttonText}>Get Started</Text>
               </Pressable>

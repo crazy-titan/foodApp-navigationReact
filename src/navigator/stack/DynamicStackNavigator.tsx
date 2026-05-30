@@ -216,14 +216,12 @@ function MyStack(){
             animationDuration: 250,
         }}>
             {userToken === null ? (
-                <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-            ) : (
                 <>
-                    <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{
-                        headerShown: false,   
-                    }}/>
-                    <Stack.Screen name="Stack-Tab" component={MyTabs} options={{ headerShown: false }}/>
+                    <Stack.Screen name="Onboarding" component={OnboardingScreen} options={{ headerShown: false }} />
+                    <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
                 </>
+            ) : (
+                <Stack.Screen name="Stack-Tab" component={MyTabs} options={{ headerShown: false }} />
             )}
         </Stack.Navigator>
     )
